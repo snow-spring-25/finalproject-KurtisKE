@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using clickRacer.Logic
 
 
 <PageTitle>Click Racer</PageTitle>
@@ -7,7 +6,7 @@
 @if (string.IsNullOrWhiteSpace(PlayerName))
 {
     <h3>Enter Your Name to Start</h3>
-    <input @bind="PlayerNameInput" placeholder="Your name" />
+    <input @bind="PlayerNameInput" placeholder="Put your name here" />
     <button @onclick="StartGame">Start Game</button>
 }
 else
@@ -17,7 +16,7 @@ else
 
     <button @onclick="GetMoney">Tire.jpg (+@clickValue)</button>
 
-    <h4>Upgrades</h4>
+    <h4>Sponsors</h4>
     @foreach (var upgrade in upgrades)
     {
         <div>
@@ -41,7 +40,7 @@ else
         new ClickUpgrade { Name = "DHL", Cost = 100, Bonus = 20 },
         new ClickUpgrade { Name = "Cigarettes", Cost = 500, Bonus = 50 },
         new ClickUpgrade { Name = "Crypto.com", Cost = 7500, Bonus = 100 },
-        new ClickUpgrade { Name = "Stake", Cost = 500000, Bonus = 25000 },
+        new ClickUpgrade { Name = "Stake", Cost = 50000, Bonus = 25000 },
         new ClickUpgrade { Name = "Secret win button", Cost = 10, Bonus = 100000 }
     };
 
