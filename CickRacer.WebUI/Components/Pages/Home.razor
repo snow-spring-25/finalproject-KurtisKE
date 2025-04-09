@@ -1,7 +1,69 @@
 ﻿@page "/"
+@using CickRacer.Logic
 
-<PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<PageTitle>Click Racer</PageTitle>
 
-Welcome to your new app.
+@if (string.IsNullOrWhiteSpace(PlayerName))
+{
+    <h3>Enter Your Name to Start</h3>
+    <input @bind="PlayerNameInput" placeholder="Your name" />
+    <button @onclick="StartGame">Start Game</button>
+}
+else
+{
+
+    <p>@PlayerName's Bank: @money</p>
+
+    <button @onclick="GetMoney">Tire.jpg (+@clickValue)</button>
+
+    <h4>Upgrades</h4>
+    @foreach (var upgrade in upgrades)
+    {
+        <div>
+            <button @onclick="() => BuyUpgrade(upgrade)" disabled="@(money < upgrade.Cost)">
+                Buy @upgrade.Name (Cost: @upgrade.Cost, +@upgrade.Bonus per click)
+            </button>
+        </div>
+    }
+}
+
+@code {
+    private int money = 0;
+    private int clickValue = 1;
+    private string PlayerName;
+    private string PlayerNameInput;
+
+    private List<ClickUpgrade> upgrades = new()
+    {
+        new ClickUpgrade { Name = "RedBull", Cost = 10, Bonus = 1 },
+        new ClickUpgrade { Name = "Google", Cost = 50, Bonus = 5 },
+        new ClickUpgrade { Name = "The Farm", Cost = 100, Bonus = 20 },
+        new ClickUpgrade { Name = "Oil", Cost = 500, Bonus = 50 },
+        new ClickUpgrade { Name = "Seal CLubbers", Cost = 7500, Bonus = 100 },
+        new ClickUpgrade { Name = "Meta", Cost = 500000, Bonus = 25000 },
+        new ClickUpgrade { Name = "Secret win button", Cost = 10, Bonus = 100000 }
+    };
+
+    private void GetMoney()
+    {
+        money += clickValue;
+    }
+
+    private void BuyUpgrade(ClickUpgrade upgrade)
+    {
+        if (money >= upgrade.Cost)
+        {
+            money -= upgrade.Cost;
+            clickValue += upgrade.Bonus;
+        }
+    }
+
+    private void StartGame()
+    {
+        if (!string.IsNullOrWhiteSpace(PlayerNameInput))
+        {
+            PlayerName = PlayerNameInput;
+        }
+    }
+}

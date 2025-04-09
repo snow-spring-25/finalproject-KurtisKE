@@ -1,6 +1,6 @@
 ﻿namespace CickRacer.Logic;
 
-public class Class1
+public class GameRunner
 {
-
+    
 }
