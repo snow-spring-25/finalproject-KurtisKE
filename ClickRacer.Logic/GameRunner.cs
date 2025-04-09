@@ -1,4 +1,4 @@
-﻿namespace CickRacer.Logic;
+﻿namespace clickRacer.Logic;
 
 public class GameRunner
 {

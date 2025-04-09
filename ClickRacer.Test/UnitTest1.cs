@@ -1,4 +1,4 @@
-﻿namespace CickRacer.Test;
+﻿namespace clickRacer.Test;
 
 public class Tests
 {

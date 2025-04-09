@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CickRacer.Logic\CickRacer.Logic.csproj" />
+    <ProjectReference Include="..\clickRacer.Logic\clickRacer.Logic.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CickRacer.Logic", "CickRacer.Logic\CickRacer.Logic.csproj", "{3C901829-7ACE-44F7-B358-C51F4DFA42AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clickRacer.Logic", "clickRacer.Logic\clickRacer.Logic.csproj", "{3C901829-7ACE-44F7-B358-C51F4DFA42AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CickRacer.Test", "CickRacer.Test\CickRacer.Test.csproj", "{B7864076-3FBA-4100-82EE-36B54F88FC60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clickRacer.Test", "clickRacer.Test\clickRacer.Test.csproj", "{B7864076-3FBA-4100-82EE-36B54F88FC60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CickRacer.ConUI", "CickRacer.ConUI\CickRacer.ConUI.csproj", "{776BFF3E-CDC1-4902-B2DD-F8A148346E10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clickRacer.ConUI", "clickRacer.ConUI\clickRacer.ConUI.csproj", "{776BFF3E-CDC1-4902-B2DD-F8A148346E10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CickRacer.WebUI", "CickRacer.WebUI\CickRacer.WebUI.csproj", "{94E1EC24-62DB-4A8B-89A1-1F857B69051B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clickRacer.WebUI", "clickRacer.WebUI\clickRacer.WebUI.csproj", "{94E1EC24-62DB-4A8B-89A1-1F857B69051B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

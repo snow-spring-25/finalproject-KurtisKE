@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\CickRacer.Logic\CickRacer.Logic.csproj" />
+    <ProjectReference Include="..\clickRacer.Logic\clickRacer.Logic.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

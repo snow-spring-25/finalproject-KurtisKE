@@ -1,4 +1,4 @@
-using CickRacer.WebUI.Components;
+using clickRacer.WebUI.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
