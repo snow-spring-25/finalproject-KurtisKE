@@ -5,13 +5,16 @@ public string Name => name;
 private int dps;
 public int DPS => dps;
 private int dpc;
-private int Bank;
+public int DPC => dpc;
+private int bank;
+public int Bank => bank;
 
 public Player(string name)
 {
     this.name = name;
     this.dps = 0;
     this.dpc = 1;
-    this.Bank = 0;
+    this.bank = 0;
 }
+
 }

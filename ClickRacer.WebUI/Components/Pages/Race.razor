@@ -1,2 +1,40 @@
 @page "/Race"
+<button @onclick=move>Move Car</button>
+<div class="position: relative;">
+    <img src="Track.jpg" style="postion: relative;" />
+    @foreach(var player in playerPositions)
+    {
+    <RaceCar 
+        X="@positions[player].X" 
+        Y="@positions[player].Y" 
+        Rot="@positions[player].Rot" />    
+    }
+</div>
 
+@code
+{
+    int[] playerPositions = [0,3];
+    void move()
+    {
+        playerPositions[0]++;
+        playerPositions[1]++;
+    }
+    Position[] positions = [
+        new Position(1, 10, 0),
+        new Position(10, 10, 15),
+        new Position(20, 50, 34),
+        new Position(30, 80, 50),
+        new Position(40, 100, 90),
+        new Position(1, 10, 0),
+        new Position(1, 10, 0),
+        new Position(1, 10, 0),
+        new Position(1, 10, 0),
+        new Position(1, 10, 0),
+        new Position(1, 10, 0),
+        new Position(1, 10, 0),
+        new Position(1, 10, 0),
+        new Position(1, 10, 0),
+        new Position(1, 10, 0),
+    ];
+    public record Position(int X, int Y, int Rot);
+}

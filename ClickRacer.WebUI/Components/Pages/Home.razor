@@ -5,13 +5,13 @@
 
 @if (string.IsNullOrWhiteSpace(PlayerName))
 {
-    <h3>Enter Your Name to Start</h3>
+    <h3>Enter Name to Start</h3>
     <input @bind="PlayerNameInput" placeholder="Put your name here" />
     <button @onclick="StartGame">Start Game</button>
 }
 else
 {
-
+    <a href="/Race">Go to the race</a>
     <p>@PlayerName's Bank: @money</p>
 
     <button @onclick="GetMoney">Tire.jpg (+@clickValue)</button>
@@ -41,7 +41,7 @@ else
         new ClickUpgrade { Name = "Cigarettes", Cost = 500, Bonus = 50 },
         new ClickUpgrade { Name = "Crypto.com", Cost = 7500, Bonus = 100 },
         new ClickUpgrade { Name = "Stake", Cost = 50000, Bonus = 25000 },
-        new ClickUpgrade { Name = "Secret win button", Cost = 10, Bonus = 100000 }
+        new ClickUpgrade { Name = "Secret win button", Cost = 1, Bonus = 100000 }
     };
 
     private void GetMoney()
