@@ -1,5 +1,5 @@
 
-public class ClickUpgrade
+public class ClickUpgrade: IUpgrade;
 {
     public string Name { get; set; } = "";
     public int Cost { get; set; }
