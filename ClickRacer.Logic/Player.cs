@@ -8,6 +8,8 @@ private int dpc;
 public int DPC => dpc;
 private int bank;
 public int Bank => bank;
+private List<string> driversPurchased; 
+public List<string> DriversPurchased => driversPurchased;
 
 public Player(string name)
 {
