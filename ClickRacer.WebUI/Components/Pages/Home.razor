@@ -1,68 +1,72 @@
 ﻿@page "/"
+@using ClickRacer.Logic
 
 
 <PageTitle>Click Racer</PageTitle>
 
-@if (string.IsNullOrWhiteSpace(PlayerName))
+@if (game.Player == null)
 {
-    <h3>Enter Name to Start</h3>
+    <h3>Enter Your Name to Start</h3>
     <input @bind="PlayerNameInput" placeholder="Put your name here" />
     <button @onclick="StartGame">Start Game</button>
 }
 else
 {
-    <a href="/Race">Go to the race</a>
-    <p>@PlayerName's Bank: @money</p>
+    <p>@game.Player.Name's Bank: @game.Player.Money</p>
 
-    <button @onclick="GetMoney">Tire.jpg (+@clickValue)</button>
+    <button @onclick="Click">Tire.jpg (+@game.Player.ClickValue)</button>
 
     <h4>Sponsors</h4>
-    @foreach (var upgrade in upgrades)
+    @foreach (var upgrade in game.Sponsers)
     {
         <div>
-            <button @onclick="() => BuyUpgrade(upgrade)" disabled="@(money < upgrade.Cost)">
+            <button @onclick="() => BuyUpgrade((ClickUpgrade)upgrade)" disabled="@(game.Player.Money < upgrade.Cost)">
                 Buy @upgrade.Name (Cost: @upgrade.Cost, +@upgrade.Bonus per click)
+            </button>
+        </div>
+    }
+    <h4>Drivers Available</h4>
+@if (GameRunner.AvailableDrivers.Count == 0)
+{
+    <p>All drivers have been drafted!</p>
+}
+else
+{
+    @foreach (var driver in GameRunner.AvailableDrivers)
+    {
+        <div>
+            <button @onclick="() => BuyDriver(driver.Name)" disabled="@(game.Player.Money < driver.Cost)">
+                Buy @driver.Name (Cost: $@driver.Cost, Skill: @driver.SkillLevel)
             </button>
         </div>
     }
 }
 
+<h4>Your Drivers</h4>
+@if (game.Player.TeamDrivers.Count == 0)
+{
+    <p>You haven’t hired any drivers yet.</p>
+}
+else
+{
+    <ul>
+        @foreach (var driver in game.Player.TeamDrivers)
+        {
+            <li>@driver.Name (Skill: @driver.SkillLevel)</li>
+        }
+    </ul>
+}
+
+}
+
+
+
 @code {
-    private int money = 0;
-    private int clickValue = 1;
-    private string PlayerName;
-    private string PlayerNameInput;
+    private string PlayerNameInput = "";
+    public GameRunner game = new();
 
-    private List<ClickUpgrade> upgrades = new()
-    {
-        new ClickUpgrade { Name = "RedBull", Cost = 10, Bonus = 1 },
-        new ClickUpgrade { Name = "Google", Cost = 50, Bonus = 5 },
-        new ClickUpgrade { Name = "DHL", Cost = 100, Bonus = 20 },
-        new ClickUpgrade { Name = "Cigarettes", Cost = 500, Bonus = 50 },
-        new ClickUpgrade { Name = "Crypto.com", Cost = 7500, Bonus = 100 },
-        new ClickUpgrade { Name = "Stake", Cost = 50000, Bonus = 25000 },
-        new ClickUpgrade { Name = "Secret win button", Cost = 1, Bonus = 100000 }
-    };
-
-    private void GetMoney()
-    {
-        money += clickValue;
-    }
-
-    private void BuyUpgrade(ClickUpgrade upgrade)
-    {
-        if (money >= upgrade.Cost)
-        {
-            money -= upgrade.Cost;
-            clickValue += upgrade.Bonus;
-        }
-    }
-
-    private void StartGame()
-    {
-        if (!string.IsNullOrWhiteSpace(PlayerNameInput))
-        {
-            PlayerName = PlayerNameInput;
-        }
-    }
+    private void StartGame() => game.StartGame(PlayerNameInput);
+    private void Click() => game.Click();
+    private void BuyUpgrade(ClickUpgrade upgrade) => game.BuyUpgrade(upgrade);
+    private void BuyDriver(string name) => game.TryBuyDriver(name);
 }

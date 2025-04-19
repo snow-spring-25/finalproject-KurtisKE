@@ -1,22 +1,36 @@
+using ClickRacer.Logic;
 public class Player
 {
-private string name;
-public string Name => name;
-private int dps;
-public int DPS => dps;
-private int dpc;
-public int DPC => dpc;
-private int bank;
-public int Bank => bank;
-private List<string> driversPurchased; 
-public List<string> DriversPurchased => driversPurchased;
+    public string Name { get; set; }
+    public int Money { get; set; }
+    public int ClickValue { get; private set; } = 1;
+    public List<Driver> TeamDrivers { get; set; } = new();
 
-public Player(string name)
-{
-    this.name = name;
-    this.dps = 0;
-    this.dpc = 1;
-    this.bank = 0;
-}
+    public Player(string name)
+    {
+        Name = name;
+    }
 
+    public void Click()
+    {
+        Money += ClickValue;
+    }
+
+    public void BuyUpgrade(ClickUpgrade upgrade)
+    {
+        if (Money >= upgrade.Cost)
+        {
+            Money -= upgrade.Cost;
+            ClickValue += upgrade.Bonus;
+        }
+    }
+
+    public void BuyMultUpgrade(ClickUpgrade upgrade)
+    {
+        if (Money >= upgrade.Cost)
+        {
+            Money -= upgrade.Cost;
+            ClickValue *= upgrade.Bonus;
+        }
+    }
 }
