@@ -6,13 +6,22 @@ public class GameRunner
 
     public List<IUpgrade> Sponsers { get; } = new()
     {
-        new ClickUpgrade { Name = "RedBull", Cost = 10, Bonus = 1 },
-        new ClickUpgrade { Name = "Google", Cost = 50, Bonus = 5 },
-        new ClickUpgrade { Name = "DHL", Cost = 100, Bonus = 20 },
-        new ClickUpgrade { Name = "Cigarettes", Cost = 500, Bonus = 50 },
-        new ClickUpgrade { Name = "Crypto.com", Cost = 7500, Bonus = 100 },
-        new ClickUpgrade { Name = "Stake", Cost = 50000, Bonus = 25000 },
-        new ClickUpgrade { Name = "Secret win button", Cost = 10, Bonus = 100000 }
+        new ClickUpgrade { Name = "RedBull", Cost = 100, Bonus = 1 },
+        new ClickUpgrade { Name = "Google", Cost = 175, Bonus = 2 },
+        new ClickUpgrade { Name = "DHL", Cost = 306, Bonus = 4 },
+        new ClickUpgrade { Name = "Pirelli", Cost = 536, Bonus = 7 },
+        new ClickUpgrade { Name = "Petronas", Cost = 938, Bonus = 12 },
+        new ClickUpgrade { Name = "Aramco", Cost = 1_641, Bonus = 20 },
+        new ClickUpgrade { Name = "Rolex", Cost = 2_872, Bonus = 33 },
+        new ClickUpgrade { Name = "Emirates", Cost = 5_027, Bonus = 50 },
+        new ClickUpgrade { Name = "Ferrari World", Cost = 8_798, Bonus = 75 },
+        new ClickUpgrade { Name = "INEOS", Cost = 15_397, Bonus = 110 },
+        new ClickUpgrade { Name = "Amazon Web Services", Cost = 26_945, Bonus = 160 },
+        new ClickUpgrade { Name = "Heineken", Cost = 47_154, Bonus = 225 },
+        new ClickUpgrade { Name = "Lenovo", Cost = 82_519, Bonus = 300 },
+        new ClickUpgrade { Name = "Stake", Cost = 144_409, Bonus = 400 },
+        new ClickUpgrade { Name = "Crypto.com", Cost = 252_716, Bonus = 525 },
+        new ClickUpgrade { Name = "Secret win button", Cost = 1, Bonus = 999_999 }
     };
 
     static public List<Driver> AvailableDrivers { get; } = new()
@@ -38,16 +47,16 @@ public class GameRunner
     new Driver { Name = "Jack Doohan", Cost = 7200000, SkillLevel = 1 },
     new Driver { Name = "Gabriel Bortoleto", Cost = 6000000, SkillLevel = 1 },
     };
-    
+
     public void StartGame(string name)
     {
         Player = new Player(name);
     }
 
     public void Click() => Player?.Click();
-    public void BuyUpgrade(ClickUpgrade upgrade) => Player?.BuyUpgrade(upgrade);
+    public void BuyUpgrade(ClickUpgrade upgrade) => Player?.BuyUpgrade(upgrade); //(REQ#1.2.3)
 
- public bool TryBuyDriver(string driverName)
+ public bool TryBuyDriver(string driverName)//(REQ#1.1.3)
     {
         var driver = AvailableDrivers.FirstOrDefault(d => d.Name == driverName);
         if (driver != null && Player.Money >= driver.Cost)

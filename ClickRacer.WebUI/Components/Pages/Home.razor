@@ -14,7 +14,11 @@ else
 {
     <p>@game.Player.Name's Bank: @game.Player.Money</p>
 
-    <button @onclick="Click">Tire.jpg (+@game.Player.ClickValue)</button>
+    <img src="ClickTire.png"
+     @onclick="Click"
+     style="cursor: pointer; width: 200px;"
+     alt="Click to earn money" />
+<p>(+@game.Player.ClickValue)</p>
 
     <h4>Sponsors</h4>
     @foreach (var upgrade in game.Sponsers)
@@ -28,7 +32,7 @@ else
     <h4>Drivers Available</h4>
 @if (GameRunner.AvailableDrivers.Count == 0)
 {
-    <p>All drivers have been drafted!</p>
+    <p>All drivers have been hired!</p>
 }
 else
 {
@@ -36,7 +40,7 @@ else
     {
         <div>
             <button @onclick="() => BuyDriver(driver.Name)" disabled="@(game.Player.Money < driver.Cost)">
-                Buy @driver.Name (Cost: $@driver.Cost, Skill: @driver.SkillLevel)
+                Buy @driver.Name (Cost: $@driver.Cost)
             </button>
         </div>
     }
@@ -45,7 +49,7 @@ else
 <h4>Your Drivers</h4>
 @if (game.Player.TeamDrivers.Count == 0)
 {
-    <p>You haven’t hired any drivers yet.</p>
+    <p>You don't have any drivers.</p>
 }
 else
 {
