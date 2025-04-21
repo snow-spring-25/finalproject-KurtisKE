@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\clickRacer.Logic\clickRacer.Logic.csproj" />
+    <ProjectReference Include="..\ClickRacer.Logic\ClickRacer.Logic.csproj" />
   </ItemGroup>
 
 </Project>

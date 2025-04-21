@@ -1,4 +1,4 @@
-﻿namespace clickRacer.Test;
+﻿namespace ClickRacer.Test;
 using ClickRacer.Logic;
 using Shouldly;
 public class Test1

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\clickRacer.Logic\clickRacer.Logic.csproj" />
+    <ProjectReference Include="..\ClickRacer.Logic\ClickRacer.Logic.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

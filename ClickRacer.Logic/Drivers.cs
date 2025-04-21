@@ -1,3 +1,4 @@
+namespace ClickRacer.Logic;
 public class Driver
 {
     public string Name;

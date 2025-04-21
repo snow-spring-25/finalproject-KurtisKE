@@ -1,4 +1,4 @@
-using ClickRacer.Logic;
+namespace ClickRacer.Logic;
 public class Player
 {
     public string Name { get; set; }
