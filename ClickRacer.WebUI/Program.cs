@@ -1,7 +1,7 @@
 using ClickRacer.WebUI.Components;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddSingleton<RaceManager>();
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();

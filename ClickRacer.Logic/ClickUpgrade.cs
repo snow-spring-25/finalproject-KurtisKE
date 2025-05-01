@@ -11,11 +11,7 @@ public class ClickUpgrade : IUpgrade
     public string Name { get; set; } = "";
     public int Cost { get; set; }
     public int Bonus { get; set; }
-
-    public ClickUpgrade()
-    {
-
-    }
+    public ClickUpgrade(){}
 }
 
 public class MultUpgrade : IUpgrade
@@ -23,11 +19,15 @@ public class MultUpgrade : IUpgrade
     public string Name { get; set; } = "";
     public int Cost { get; set; }
     public int Bonus { get; set; }
+    public MultUpgrade(){}
+}
 
-    public MultUpgrade()
-    {
-
-    }
+public class PassiveUpgrade : IUpgrade
+{
+    public string Name { get; set; } = "";
+    public int Cost { get; set; }
+    public int Bonus { get; set; }
+    public PassiveUpgrade(){}
 }
 
 

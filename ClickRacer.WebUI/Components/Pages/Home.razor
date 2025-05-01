@@ -1,9 +1,14 @@
 ﻿@page "/"
 @using ClickRacer.Logic
+@namespace IDisposable
+@inject RaceManager raceManager
 
-
+    @{
+        var timeLeft = raceManager.NextRaceTime - DateTime.UtcNow;
+        var minutes = (int)timeLeft.TotalMinutes;
+        var seconds = timeLeft.Seconds;
+    }
 <PageTitle>Click Racer</PageTitle>
-new thing
 @if (game.Player == null)
 {
     <h3>Enter Your Name to Start</h3>
@@ -13,12 +18,10 @@ new thing
 else
 {
     <p>@game.Player.Name's Bank: @game.Player.Money</p>
+    <p>Passive Income: +@game.Player.PassiveIncomePerSecond /sec</p>
 
-    <img src="ClickTire.png"
-     @onclick="Click"
-     style="cursor: pointer; width: 200px;"
-     alt="Click to earn money" />
-<p>(+@game.Player.ClickValue)</p>
+    <img src="ClickTire.png" @onclick="Click" style="cursor: pointer; width: 200px;" alt="Click to earn money" />
+    <p>(+@game.Player.ClickValue)</p>
 
     <h4>Sponsors</h4>
     @foreach (var upgrade in game.Sponsers)
@@ -29,48 +32,150 @@ else
             </button>
         </div>
     }
-    <h4>Drivers Available</h4>
-@if (GameRunner.AvailableDrivers.Count == 0)
-{
-    <p>All drivers have been hired!</p>
-}
-else
-{
-    @foreach (var driver in GameRunner.AvailableDrivers)
+    <h4>Media Sponsorships (Passive Income)</h4>
+    @if (game.PassiveUpgrades.Count == 0)
     {
-        <div>
-            <button @onclick="() => BuyDriver(driver.Name)" disabled="@(game.Player.Money < driver.Cost)">
-                Buy @driver.Name (Cost: $@driver.Cost)
-            </button>
-        </div>
+        <p>All passive upgrades purchased! Get Clicking!</p>
     }
-}
-
-<h4>Your Drivers</h4>
-@if (game.Player.TeamDrivers.Count == 0)
-{
-    <p>You don't have any drivers.</p>
-}
-else
-{
-    <ul>
-        @foreach (var driver in game.Player.TeamDrivers)
+    else
+    {
+        @foreach (var upgrade in game.PassiveUpgrades)
         {
-            <li>@driver.Name (Skill: @driver.SkillLevel)</li>
+            <div>
+                <button @onclick="() => BuyPassive(upgrade)" disabled="@(game.Player.Money < upgrade.Cost)">
+                    Buy @upgrade.Name (Cost: $@upgrade.Cost, +@upgrade.Bonus/sec)
+                </button>
+            </div>
         }
-    </ul>
-}
+    }
 
-}
+    <h4>Drivers Available</h4>
+    @if (GameRunner.AvailableDrivers.Count == 0)
+    {
+        <p>All drivers have been hired!</p>
+    }
+    else
+    {
+        @foreach (var driver in GameRunner.AvailableDrivers)
+        {
+            <div>
+                <button @onclick="() => BuyDriver(driver.Name)" disabled="@(game.Player.Money < driver.Cost)">
+                    Buy @driver.Name (Cost: $@driver.Cost)
+                </button>
+            </div>
+        }
+    }
+
+    <h4>Your Drivers</h4>
+    @if (game.Player.TeamDrivers.Count == 0)
+    {
+        <p>You don't have any drivers.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var driver in game.Player.TeamDrivers)
+            {
+                <li>@driver.Name (Skill: @driver.SkillLevel)</li>
+            }
+        </ul>
+    }
+
+    <h4>Submit a Driver to Race</h4>
+    @foreach (var driver in game.Player.TeamDrivers)
+    {
+        if (!raceManager.IsDriverSubmitted(driver))
+        {
+            <button @onclick="() => SubmitDriver(driver)">Submit @driver.Name</button>
+        }
+        else
+        {
+            <p>@driver.Name is in his car, ready to go.</p>
+        }
+    }
+
+    <h4>Drivers in the Race</h4>
+    @if (raceManager.GetSubmittedDriverNames().Count == 0)
+    {
+        <p>No drivers submitted yet.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var name in raceManager.GetSubmittedDriverNames())
+            {
+                <li>@name</li>
+            }
+        </ul>
+    }
+        <p>Next race in: @minutes:@seconds.ToString("D2")</p>
+    @if (!string.IsNullOrEmpty(lastRaceResult))
+        {
+            <p><strong>@lastRaceResult</strong></p>
+        }
+    }
+
+    
 
 
 
 @code {
     private string PlayerNameInput = "";
     public GameRunner game = new();
+    private System.Timers.Timer? raceTimer;
+    private System.Timers.Timer? incomeTimer;
+    System.Timers.Timer? countdownTimer;
+    private int secondsUntilNextRace = 120;
+    
 
-    private void StartGame() => game.StartGame(PlayerNameInput);
+    private void StartGame()
+    {
+        game.StartGame(PlayerNameInput);
+
+        incomeTimer = new System.Timers.Timer(1000); //erry second
+        incomeTimer.Elapsed += (_, _) =>
+        {
+            game.AddPassiveIncome();
+            InvokeAsync(StateHasChanged);
+        };
+        incomeTimer.Start();
+        raceTimer = new System.Timers.Timer(120000); //2 minutes
+        raceTimer.Elapsed += (_, _) =>
+        {
+            string result = raceManager.RunRace();
+            lastRaceResult = result;
+            InvokeAsync(StateHasChanged);
+        };
+        raceTimer.Start();
+        countdownTimer = new System.Timers.Timer(1000);
+        countdownTimer.Elapsed += (_, _) =>
+        {
+            if (secondsUntilNextRace > 0)
+            {
+                secondsUntilNextRace--;
+                InvokeAsync(StateHasChanged);
+            }
+        };
+        countdownTimer.Start();
+
+    }
+    public void Dispose()//stop the clock? where? after race?
+    {
+        incomeTimer?.Dispose();
+        raceTimer?.Dispose();
+        countdownTimer?.Dispose();
+    }
     private void Click() => game.Click();
     private void BuyUpgrade(ClickUpgrade upgrade) => game.BuyUpgrade(upgrade);
     private void BuyDriver(string name) => game.TryBuyDriver(name);
+    private void BuyPassive(PassiveUpgrade upgrade) => game.BuyPassiveUpgrade(upgrade);
+    private string lastRaceResult = "";
+    private void RunRace() => lastRaceResult = raceManager.RunRace();
+    private void SubmitDriver(Driver driver)
+    {
+        if (game.Player != null)
+        {
+            raceManager.SubmitDriver(game.Player, driver);
+        }
+    }
 }
