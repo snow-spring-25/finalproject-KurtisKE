@@ -122,10 +122,10 @@ else
 @code {
     private string PlayerNameInput = "";
     public GameRunner game = new();
-    private System.Timers.Timer? raceTimer;
+    private static System.Timers.Timer? raceTimer;
     private System.Timers.Timer? incomeTimer;
-    System.Timers.Timer? countdownTimer;
-    private int secondsUntilNextRace = 120;
+    private static System.Timers.Timer? countdownTimer;
+    private static int secondsUntilNextRace = 120;
     
 
     private void StartGame()
@@ -169,7 +169,7 @@ else
     private void BuyUpgrade(ClickUpgrade upgrade) => game.BuyUpgrade(upgrade);
     private void BuyDriver(string name) => game.TryBuyDriver(name);
     private void BuyPassive(PassiveUpgrade upgrade) => game.BuyPassiveUpgrade(upgrade);
-    private string lastRaceResult = "";
+    private static string lastRaceResult = "";
     private void RunRace() => lastRaceResult = raceManager.RunRace();
     private void SubmitDriver(Driver driver)
     {
